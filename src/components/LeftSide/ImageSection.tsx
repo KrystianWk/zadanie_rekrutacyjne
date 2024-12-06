@@ -34,7 +34,6 @@ const ImageSection: React.FC<ImageSectionProps> = ({ id, src, wrapperRef }) => {
         showEditBar ? "border-Primary" : "border-transparent"
       }`}
       onClick={handleClick}>
-      {/* Delete Button */}
       <button
         className={`absolute -top-3 -right-3 bg-white p-1 rounded-full ${
           showEditBar ? "visible" : "invisible"
@@ -43,7 +42,6 @@ const ImageSection: React.FC<ImageSectionProps> = ({ id, src, wrapperRef }) => {
         <DeleteIcon width={16} height={16} color="red" />
       </button>
 
-      {/* Drag Handle */}
       <div
         ref={dragHandleRef}
         className={`absolute top-[-20px] left-[-20px] bg-white p-2 rounded-full cursor-grab shadow-md ${
@@ -52,14 +50,12 @@ const ImageSection: React.FC<ImageSectionProps> = ({ id, src, wrapperRef }) => {
         <MoveIcon width={24} height={24} color="purple" />
       </div>
 
-      {/* Scale Handle */}
       <div
         ref={scaleHandleRef}
         className={`h-[24px] w-[24px] bg-Primary border-[4px] border-white rounded-full absolute bottom-[-13px] right-[-13px] cursor-nwse-resize ${
           showEditBar ? "visible" : "invisible"
         }`}></div>
 
-      {/* Image */}
       <img
         ref={imageRef}
         src={src}
