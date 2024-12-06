@@ -6,12 +6,12 @@ import { usePosterStore } from "../../store/posterStore";
 import { PosterProps } from "../../types/PosterTypes";
 
 const Poster: React.FC<PosterProps> = ({ posterRef }) => {
-  const { file, image, setImage, showText, setShowText, isBackgroundGray } =
+  const { file, images, texts, isBackgroundGray, removeText } =
     usePosterStore();
 
   return (
     <div
-      className={`relative w-[759px] h-[948px]   shadow-md ${
+      className={`relative w-[759px] h-[948px] shadow-md ${
         isBackgroundGray ? "bg-Black50" : ""
       }`}
       ref={posterRef}>
@@ -29,17 +29,27 @@ const Poster: React.FC<PosterProps> = ({ posterRef }) => {
         />
       )}
 
-      {image && (
+      {images.map((image) => (
         <ImageSection
-          image={image}
-          setImage={setImage}
+          key={image.id}
+          id={image.id}
+          src={image.src}
           wrapperRef={posterRef}
         />
-      )}
+      ))}
 
-      {showText && (
-        <TextAreaSection wrapperRef={posterRef} setShowText={setShowText} />
-      )}
+      {texts.map((text) => (
+        <TextAreaSection
+          key={text.id}
+          id={text.id}
+          wrapperRef={posterRef}
+          setShowText={() => removeText(text.id)}
+          initialContent={text.content}
+          initialColor={text.color}
+          text={""}
+          color={""}
+        />
+      ))}
     </div>
   );
 };

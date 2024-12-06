@@ -24,7 +24,7 @@ const Editor = ({ posterRef }: EditorProps) => {
       <div className="absolute bottom-0 right-0">
         <Button
           value={"Export to PNG"}
-          whenDisabled={posterReady}
+          whenDisabled={!posterReady}
           functionOnClick={handleExportClick}
         />
       </div>

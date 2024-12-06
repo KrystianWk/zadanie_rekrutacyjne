@@ -12,20 +12,30 @@ export type PosterElement = {
   src?: string;
   color: string;
 };
-export type ImageProps = {
-  image: string;
-  setImage: (value: string | null) => void;
+export interface ImageSectionProps {
+  id: string;
+  src: string;
   wrapperRef: React.RefObject<HTMLDivElement>;
-};
+}
 
 export type PosterProps = {
   posterRef: React.RefObject<HTMLDivElement>;
 };
 
-export type TextAreaSectionProps = {
+export interface TextAreaSectionProps {
+  id: string;
+
+  text: string;
+
+  color: string;
+
   wrapperRef: React.RefObject<HTMLDivElement>;
-  setShowText: (value: boolean) => void;
-};
+
+  setShowText: (show: boolean) => void;
+  initialContent?: string;
+
+  initialColor?: string;
+}
 
 export type ButtonProps = {
   value: string;
@@ -51,4 +61,15 @@ export type ResetModalProps = {
 export type RestartBoxProps = {
   closePopup: () => void;
   reset: () => void;
+};
+
+export type Image = {
+  id: string;
+  src: string;
+};
+
+export type Text = {
+  id: string;
+  content: string;
+  color: string;
 };

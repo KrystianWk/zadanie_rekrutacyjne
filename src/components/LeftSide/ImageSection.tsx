@@ -1,47 +1,68 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { DeleteIcon, MoveIcon } from "../icons";
 import useMoveAndScale from "../../hooks/useMoveAndScale";
-import { ImageProps } from "../../types/PosterTypes";
+import { usePosterStore } from "../../store/posterStore";
+import { ImageSectionProps } from "../../types/PosterTypes";
 
-const ImageSec: React.FC<ImageProps> = ({ image, setImage, wrapperRef }) => {
+const ImageSection: React.FC<ImageSectionProps> = ({ id, src, wrapperRef }) => {
   const imageRef = useRef<HTMLImageElement>(null);
+  const [showEditBar, setShowEditBar] = useState(false);
+  const { removeImage, setSelectedImageId } = usePosterStore();
 
-  const {
-    containerRef: boxContainerRef,
-    dragHandleRef,
-    scaleHandleRef,
-  } = useMoveAndScale({
+  const { containerRef, dragHandleRef, scaleHandleRef } = useMoveAndScale({
     wrapperRef,
     editableRef: imageRef,
   });
 
-  const handleDelete = () => {
-    setImage(null);
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedImageId(id);
+    setShowEditBar(true);
+  };
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    removeImage(id);
+    setShowEditBar(false);
+    setSelectedImageId(null);
   };
 
   return (
     <div
-      ref={boxContainerRef}
-      className="absolute select-none hover:cursor-pointer top-[400px] left-[280px] w-[200px] h-[200px]">
-      <div className="absolute top-[-10px] right-[-10px]">
-        <button
-          onClick={handleDelete}
-          className="h-[24px] w-[24px] bg-white rounded-full flex items-center justify-center">
-          <DeleteIcon width={16} height={16} color="red" />
-        </button>
-      </div>
+      ref={containerRef}
+      className={`absolute top-[250px] left-[200px] w-[200px] h-[200px] border-[2px] ${
+        showEditBar ? "border-Primary" : "border-transparent"
+      }`}
+      onClick={handleClick}>
+      {/* Delete Button */}
+      <button
+        className={`absolute -top-3 -right-3 bg-white p-1 rounded-full ${
+          showEditBar ? "visible" : "invisible"
+        }`}
+        onClick={handleDelete}>
+        <DeleteIcon width={16} height={16} color="red" />
+      </button>
+
+      {/* Drag Handle */}
       <div
         ref={dragHandleRef}
-        className="absolute top-[-20px] left-[-20px] h-[32px] w-[32px] bg-white rounded-full flex justify-center items-center cursor-grab">
-        <MoveIcon width={16} height={16} color="purple" />
+        className={`absolute top-[-20px] left-[-20px] bg-white p-2 rounded-full cursor-grab shadow-md ${
+          showEditBar ? "visible" : "invisible"
+        }`}>
+        <MoveIcon width={24} height={24} color="purple" />
       </div>
+
+      {/* Scale Handle */}
       <div
         ref={scaleHandleRef}
-        className="h-[24px] w-[24px] bg-Primary border-[4px] border-white rounded-full absolute bottom-[-13px] right-[-13px] cursor-nwse-resize"
-      />
+        className={`h-[24px] w-[24px] bg-Primary border-[4px] border-white rounded-full absolute bottom-[-13px] right-[-13px] cursor-nwse-resize ${
+          showEditBar ? "visible" : "invisible"
+        }`}></div>
+
+      {/* Image */}
       <img
         ref={imageRef}
-        src={image || ""}
+        src={src}
         alt="Uploaded"
         className="w-full h-full object-contain"
       />
@@ -49,4 +70,4 @@ const ImageSec: React.FC<ImageProps> = ({ image, setImage, wrapperRef }) => {
   );
 };
 
-export default ImageSec;
+export default ImageSection;

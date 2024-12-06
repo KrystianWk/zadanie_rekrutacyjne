@@ -6,9 +6,12 @@ import { TextAreaSectionProps } from "../../types/PosterTypes";
 const TextAreaSection: React.FC<TextAreaSectionProps> = ({
   wrapperRef,
   setShowText,
+  initialContent = "Type your text here",
+  initialColor = "black",
 }) => {
   const textAreaRef = useRef<HTMLDivElement>(null);
-  const [color, setColor] = useState<string>("black");
+
+  const [color, setColor] = useState<string>(initialColor);
   const [showEditBar, setShowEditBar] = useState(false);
   const [isTextEmpty, setIsTextEmpty] = useState(true);
 
@@ -52,10 +55,6 @@ const TextAreaSection: React.FC<TextAreaSectionProps> = ({
     };
   }, [containerRef]);
 
-  const handleDelete = () => {
-    setShowText(false);
-  };
-
   return (
     <div
       ref={containerRef}
@@ -67,8 +66,8 @@ const TextAreaSection: React.FC<TextAreaSectionProps> = ({
         className={`absolute -top-3 -right-3 bg-white p-1 rounded-full ${
           showEditBar ? "visible" : "invisible"
         }`}
-        onClick={handleDelete}>
-        <DeleteIcon width={18} height={18} color="red" />
+        onClick={() => setShowText(false)}>
+        <DeleteIcon width={16} height={16} color="red" />
       </button>
 
       <div
@@ -76,7 +75,7 @@ const TextAreaSection: React.FC<TextAreaSectionProps> = ({
         className={`absolute top-[-20px] left-[-20px] bg-white p-2 rounded-full cursor-grab shadow-md ${
           showEditBar ? "visible" : "invisible"
         }`}>
-        <MoveIcon width={32} height={32} color="rgba(114, 9, 183, 1)" />
+        <MoveIcon width={24} height={24} color="rgba(114, 9, 183, 1)" />
       </div>
 
       <div
@@ -95,7 +94,7 @@ const TextAreaSection: React.FC<TextAreaSectionProps> = ({
         style={{
           color,
         }}>
-        Type your text here
+        {initialContent}
       </div>
 
       <div
