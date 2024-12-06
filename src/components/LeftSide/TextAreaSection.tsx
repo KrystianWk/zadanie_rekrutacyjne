@@ -1,20 +1,22 @@
 import React, { useRef, useState, useEffect } from "react";
 import { DeleteIcon, MoveIcon } from "../icons";
-import useCustomizeObject from "../../hooks/useDragAndResize";
+import useMoveAndScale from "../../hooks/useMoveAndScale";
 import { TextAreaSectionProps } from "../../types/PosterTypes";
 
 const TextAreaSection: React.FC<TextAreaSectionProps> = ({
-  containerRef,
+  wrapperRef,
   setShowText,
 }) => {
   const textAreaRef = useRef<HTMLDivElement>(null);
   const [color, setColor] = useState<string>("black");
   const [showEditBar, setShowEditBar] = useState(false);
   const [isTextEmpty, setIsTextEmpty] = useState(true);
-  const { boxRef, moveButtonRef, resizeButtonRef } = useCustomizeObject({
-    containerRef,
-    imageRef: textAreaRef,
+
+  const { containerRef, dragHandleRef, scaleHandleRef } = useMoveAndScale({
+    wrapperRef,
+    editableRef: textAreaRef,
   });
+
   useEffect(() => {
     const handleInput = () => {
       if (textAreaRef.current) {
@@ -33,9 +35,13 @@ const TextAreaSection: React.FC<TextAreaSectionProps> = ({
       }
     };
   }, []);
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (boxRef.current && !boxRef.current.contains(e.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
         setShowEditBar(false);
       }
     };
@@ -44,7 +50,7 @@ const TextAreaSection: React.FC<TextAreaSectionProps> = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [boxRef]);
+  }, [containerRef]);
 
   const handleDelete = () => {
     setShowText(false);
@@ -52,13 +58,13 @@ const TextAreaSection: React.FC<TextAreaSectionProps> = ({
 
   return (
     <div
-      ref={boxRef}
-      className={`absolute top-[450px] left-[200px] w-[350px] h-[120px]   border-[2px]  px-[24px] py-[12px] gap-[10px] ${
+      ref={containerRef}
+      className={`absolute top-[450px] left-[200px] w-[350px] h-[120px] border-[2px] px-[24px] py-[12px] gap-[10px] ${
         showEditBar ? "border-Primary" : "border-transparent"
       }`}
       onClick={() => setShowEditBar(true)}>
       <button
-        className={`absolute -top-3 -right-3 bg-white p-1 rounded-full  ${
+        className={`absolute -top-3 -right-3 bg-white p-1 rounded-full ${
           showEditBar ? "visible" : "invisible"
         }`}
         onClick={handleDelete}>
@@ -66,7 +72,7 @@ const TextAreaSection: React.FC<TextAreaSectionProps> = ({
       </button>
 
       <div
-        ref={moveButtonRef}
+        ref={dragHandleRef}
         className={`absolute top-[-20px] left-[-20px] bg-white p-2 rounded-full cursor-grab shadow-md ${
           showEditBar ? "visible" : "invisible"
         }`}>
@@ -74,7 +80,7 @@ const TextAreaSection: React.FC<TextAreaSectionProps> = ({
       </div>
 
       <div
-        ref={resizeButtonRef}
+        ref={scaleHandleRef}
         className={`h-[24px] w-[24px] bg-Primary border-[4px] border-white rounded-full absolute bottom-[-13px] right-[-13px] cursor-nwse-resize ${
           showEditBar ? "visible" : "invisible"
         }`}></div>

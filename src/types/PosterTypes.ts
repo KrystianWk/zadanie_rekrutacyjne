@@ -15,14 +15,15 @@ export type PosterElement = {
 export type ImageProps = {
   image: string;
   setImage: (value: string | null) => void;
-  containerRef: React.RefObject<HTMLDivElement>;
+  wrapperRef: React.RefObject<HTMLDivElement>;
 };
+
 export type PosterProps = {
   posterRef: React.RefObject<HTMLDivElement>;
 };
 
 export type TextAreaSectionProps = {
-  containerRef: React.RefObject<HTMLDivElement>;
+  wrapperRef: React.RefObject<HTMLDivElement>;
   setShowText: (value: boolean) => void;
 };
 

@@ -1,4 +1,3 @@
-import React, { MouseEventHandler } from "react";
 import RightHeader from "./RightHeader";
 import Main from "./Main";
 import { usePosterStore } from "../../store/posterStore";
@@ -6,7 +5,7 @@ import Button from "./Button";
 import { exportToPng } from "./toPng";
 import { EditorProps } from "../../types/PosterTypes";
 
-const Editor = ({ posterRef, openPopup }: EditorProps) => {
+const Editor = ({ posterRef }: EditorProps) => {
   const { posterReady } = usePosterStore();
 
   const handleExportClick = () => {

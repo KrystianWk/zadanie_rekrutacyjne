@@ -33,12 +33,12 @@ const Poster: React.FC<PosterProps> = ({ posterRef }) => {
         <ImageSection
           image={image}
           setImage={setImage}
-          containerRef={posterRef}
+          wrapperRef={posterRef}
         />
       )}
 
       {showText && (
-        <TextAreaSection containerRef={posterRef} setShowText={setShowText} />
+        <TextAreaSection wrapperRef={posterRef} setShowText={setShowText} />
       )}
     </div>
   );

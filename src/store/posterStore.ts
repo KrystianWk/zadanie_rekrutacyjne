@@ -39,6 +39,7 @@ export const usePosterStore = create<State>((set) => ({
   setImage: (image) =>
     set((state) => ({
       image,
+      isBackgroundGray: !!image && !state.file,
       posterReady: !(state.file || image || state.showText),
     })),
 
