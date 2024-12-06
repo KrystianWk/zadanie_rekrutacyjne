@@ -6,14 +6,25 @@ export async function exportToPng(
 ) {
   if (!element) return;
 
+  const originalWidth = 759;
+  const originalHeight = 948;
+
+  const targetWidth = 1080;
+  const targetHeight = 1350;
+
+  const scaleX = targetWidth / originalWidth;
+  const scaleY = targetHeight / originalHeight;
+
+  const scale = Math.min(scaleX, scaleY);
+
   const canvas = await html2canvas(element, {
-    width: 1080,
-    height: 1350,
-    scale: 1,
+    scale: scale,
     useCORS: true,
+    allowTaint: true,
   });
 
   const dataURL = canvas.toDataURL("image/png");
+
   const link = document.createElement("a");
   link.href = dataURL;
   link.download = fileName;
