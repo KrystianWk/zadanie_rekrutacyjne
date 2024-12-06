@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef, useState } from "react";
+import Editor from "./components/Rightside/Editor";
+import Poster from "./components/LeftSide/Poster";
+import Restart from "./components/Rightside/Restart";
+import { usePosterStore } from "./store/posterStore";
 
-function App() {
+const App = () => {
+  const posterRef = useRef<HTMLDivElement>(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const openPopup = () => setIsPopupOpen(true);
+  const closePopup = () => setIsPopupOpen(false);
+
+  const reset = usePosterStore((state) => state.reset);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {isPopupOpen && <Restart closePopup={closePopup} reset={reset} />}
+      <div className="font-poppins flex justify-center align-middle gap-8 m-8">
+        <div className="w-[759px] h-[948px]">
+          <Poster posterRef={posterRef} />
+        </div>
+        <div className="w-[759px] h-[948px]">
+          <Editor posterRef={posterRef} openPopup={openPopup} />
+        </div>
+      </div>
+    </>
   );
-}
+};
 
 export default App;
