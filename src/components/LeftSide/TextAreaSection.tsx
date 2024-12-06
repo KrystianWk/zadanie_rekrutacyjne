@@ -59,7 +59,7 @@ const TextAreaSection: React.FC<TextAreaSectionProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`absolute top-[450px] left-[200px] w-[350px] h-[120px] border-[2px] px-[24px] py-[12px] gap-[10px] ${
+      className={`absolute top-[250px] left-[200px] w-[350px] h-[120px] border-[2px] px-[24px] py-[12px] gap-[10px] ${
         showEditBar ? "border-Primary" : "border-transparent"
       }`}
       onClick={() => setShowEditBar(true)}>
@@ -89,8 +89,8 @@ const TextAreaSection: React.FC<TextAreaSectionProps> = ({
         ref={textAreaRef}
         contentEditable
         suppressContentEditableWarning
-        className={`w-full h-full flex items-center justify-center text-center p-2 outline-none overflow-hidden ${
-          isTextEmpty ? "opacity-50 black50" : "opacity-100 text-Black100"
+        className={`text-[32px] font-bold leading-[48px] w-[302px] h-[96px] flex items-center justify-center text-center p-2 outline-none overflow-hidden ${
+          isTextEmpty ? "opacity-25" : "opacity-100 text-Black100"
         }`}
         style={{
           color,
@@ -99,16 +99,20 @@ const TextAreaSection: React.FC<TextAreaSectionProps> = ({
       </div>
 
       <div
-        className={`absolute -bottom-8 left-1/4 transform -translate-x-1/2 flex flex-row gap-1 ${
+        className={`w-[136px] h-[24px] flex flex-row gap-[6px] justify-center absolute bottom-[-32px] left-0 ${
           showEditBar ? "visible" : "invisible"
         }`}>
-        {["black", "white", "red", "blue", "green"].map((colorOption) => (
+        {["black", "white", "red", "blue", "#00DA16"].map((colorOption) => (
           <button
             key={colorOption}
-            className={`w-6 h-6 rounded-full border ${
-              color === colorOption ? "border-purple-500" : "border-gray-300"
+            className={`relative w-6 h-6 rounded-full cursor-pointer ${
+              color === colorOption
+                ? "after:content-[''] after:absolute after:inset-[-4px] after:rounded-full after:border-2 after:border-white"
+                : ""
             }`}
-            style={{ backgroundColor: colorOption }}
+            style={{
+              backgroundColor: colorOption,
+            }}
             onClick={() => setColor(colorOption)}></button>
         ))}
       </div>

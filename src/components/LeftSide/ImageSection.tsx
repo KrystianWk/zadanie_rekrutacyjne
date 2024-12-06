@@ -22,7 +22,7 @@ const ImageSec: React.FC<ImageProps> = ({ image, setImage, wrapperRef }) => {
   return (
     <div
       ref={boxContainerRef}
-      className="absolute select-none hover:cursor-pointer top-[200px] left-[100px] w-[200px] h-[200px]">
+      className="absolute select-none hover:cursor-pointer top-[400px] left-[280px] w-[200px] h-[200px]">
       <div className="absolute top-[-10px] right-[-10px]">
         <button
           onClick={handleDelete}

@@ -7,7 +7,9 @@ export async function exportToPng(
   if (!element) return;
 
   const canvas = await html2canvas(element, {
-    scale: 2,
+    width: 1080,
+    height: 1350,
+    scale: 1,
     useCORS: true,
   });
 
